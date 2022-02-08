@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: blane-scheduler
+  name: blane-scheduler
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: blane-scheduler
+    spec:
+      containers:
+      - env:
+        - name: RDS_DB_NAME
+          value: blanate
+        - name: RDS_HOSTNAME
+          value: mysqldb
+        - name: RDS_PASSWORD
+          value: nechba
+        - name: RDS_PORT
+          value: "3306"
+        - name: RDS_USERNAME
+          value: root
+        image: kamalessafi/blane-scheduler-kubernetes:0.0.11-SNAPSHOT
+        name: blane-scheduler
+      restartPolicy: Always

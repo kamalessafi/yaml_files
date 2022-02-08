@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysqldb
+  name: mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysqldb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysqldb
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: blanate
+        - name: MYSQL_ROOT_PASSWORD
+          value: nechba123@
+        image: mysql:5.7
+        args:
+          - "--ignore-db-dir=lost+found"
+        name: mysqldb
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-database-data-volume
+      restartPolicy: Always
+      volumes:
+      - name: mysql-database-data-volume
+        persistentVolumeClaim:
+          claimName: mysql-database-data-volume

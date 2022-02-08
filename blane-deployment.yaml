@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: blane
+  name: blane
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blane
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: blane
+    spec:
+      containers:
+      - env:
+        - name: RDS_DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_DB_NAME
+              name: blane-config
+        - name: RDS_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_HOSTNAME
+              name: blane-config
+        - name: RDS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: RDS_PASSWORD
+              name: blane-secrets
+        - name: RDS_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_PORT
+              name: blane-config
+        - name: RDS_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_USERNAME
+              name: blane-config
+        image: kamalessafi/blane-kubernetes:0.0.16-SNAPSHOT
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "touch /tmp/healthy"]
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/healthy
+          failureThreshold: 10
+          periodSeconds: 5
+          initialDelaySeconds: 20
+        name: blane
+        ports:
+        - name: liveness-port
+          containerPort: 8000
+        resources: #CHANGE
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 1024Mi #256Mi
+      restartPolicy: Always

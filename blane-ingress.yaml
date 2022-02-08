@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /blane/*
+        backend:
+          serviceName: blane
+          servicePort: 8000          
+      - path: /blane-additional-services/*
+        backend:
+          serviceName: blane-additional-services
+          servicePort: 8200
+
+
+
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: simple-fanout-example
+#spec:
+#  rules:
+#  - host: foo.bar.com
+#    http:
+#      paths:
+#      - path: /foo
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: service1
+#            port:
+#              number: 4200
+#      - path: /bar
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: service2
+#            port:
+#              number: 8080

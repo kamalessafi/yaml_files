@@ -1,0 +1,69 @@
+version: '3.7'
+services:
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
+    networks:
+      - blane-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=nechba
+      - MYSQL_DATABASE=blanate
+    ports:
+      - "3306:3306"
+
+  blane:
+    image: kamalessafi/blane-kubernetes:0.0.11-SNAPSHOT
+    restart: always
+    depends_on:
+      - mysqldb
+      - blane-additional-services
+    mem_limit: 700m
+    ports:
+      - "8000:8000"
+    networks:
+      - blane-network
+    environment:
+      RDS_HOSTNAME: mysqldb
+      RDS_PORT: 3306
+      RDS_DB_NAME: blanate
+      RDS_USERNAME: root
+      RDS_PASSWORD: nechba
+
+
+  blane-additional-services:
+    image: kamalessafi/blane-additional-services-kubernetes:0.0.11-SNAPSHOT
+    restart: always
+    depends_on:
+      - mysqldb
+    mem_limit: 700m
+    ports:
+      - "8200:8200"
+    networks:
+      - blane-network
+    environment:
+      RDS_HOSTNAME: mysqldb
+      RDS_PORT: 3306
+      RDS_DB_NAME: blanate
+      RDS_USERNAME: root
+      RDS_PASSWORD: nechba
+
+
+  blane-scheduler:
+    image: kamalessafi/blane-scheduler-kubernetes:0.0.11-SNAPSHOT
+    restart: always
+    depends_on:
+      - mysqldb
+    mem_limit: 700m
+    networks:
+      - blane-network
+    environment:
+      RDS_HOSTNAME: mysqldb
+      RDS_PORT: 3306
+      RDS_DB_NAME: blanate
+      RDS_USERNAME: root
+      RDS_PASSWORD: nechba
+
+
+
+networks:
+  blane-network:
