@@ -5,7 +5,7 @@ metadata:
     app: blane-additional-services
   name: blane-additional-services
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - name: "8200"
     port: 8200

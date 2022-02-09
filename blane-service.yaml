@@ -5,7 +5,7 @@ metadata:
     app: blane
   name: blane
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - name: "8000"
     port: 8000

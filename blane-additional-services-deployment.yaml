@@ -5,7 +5,7 @@ metadata:
     app: blane-additional-services
   name: blane-additional-services
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: blane-additional-services
