@@ -55,6 +55,14 @@ spec:
           failureThreshold: 10
           periodSeconds: 5
           initialDelaySeconds: 20
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/healthy
+          failureThreshold: 3
+          periodSeconds: 10
+          initialDelaySeconds: 20
         name: blane
         ports:
         - name: liveness-port
