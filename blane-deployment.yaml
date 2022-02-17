@@ -24,9 +24,9 @@ spec:
               name: blane-config
         - name: RDS_HOSTNAME
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               key: RDS_HOSTNAME
-              name: blane-config
+              name: blane-secrets
         - name: RDS_PASSWORD
           valueFrom:
             secretKeyRef:
