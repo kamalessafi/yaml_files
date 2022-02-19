@@ -7,7 +7,9 @@ metadata:
   name: blane-scheduler
 spec:
   replicas: 1
-  strategy: {}
+  selector:
+    matchLabels:
+      app: blane-scheduler
   template:
     metadata:
       labels:
@@ -16,15 +18,46 @@ spec:
       containers:
       - env:
         - name: RDS_DB_NAME
-          value: blanate
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_DB_NAME
+              name: blane-config
         - name: RDS_HOSTNAME
-          value: mysqldb
+          valueFrom:
+            secretKeyRef:
+              key: RDS_HOSTNAME
+              name: blane-secrets
         - name: RDS_PASSWORD
-          value: nechba
+          valueFrom:
+            secretKeyRef:
+              key: RDS_PASSWORD
+              name: blane-secrets
         - name: RDS_PORT
-          value: "3306"
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_PORT
+              name: blane-config
         - name: RDS_USERNAME
-          value: root
-        image: kamalessafi/blane-scheduler-kubernetes:0.0.11-SNAPSHOT
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_USERNAME
+              name: blane-config
+        image: kamalessafi/blane-scheduler-kubernetes:0.0.24-SNAPSHOT
         name: blane-scheduler
+        resources: #CHANGE
+          requests:
+            cpu: 500m
+            memory: 1024Mi       
       restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: blane
+  name: blane
+spec:
+  type: NodePort
+  selector:
+    app: blane-scheduler

@@ -41,7 +41,7 @@ spec:
             configMapKeyRef:
               key: RDS_USERNAME
               name: blane-config
-        image: kamalessafi/blane-additional-services-kubernetes:0.0.22-SNAPSHOT
+        image: kamalessafi/blane-additional-services-kubernetes:0.0.24-SNAPSHOT
         name: blane-additional-services
         ports:
         - name: liveness-port
