@@ -46,8 +46,8 @@ spec:
         name: blane-scheduler
         resources: #CHANGE
           requests:
-            cpu: 500m
-            memory: 1024Mi       
+            cpu: 200m
+            memory: 512Mi       
       restartPolicy: Always
 
 ---
@@ -55,8 +55,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: blane
-  name: blane
+    app: blane-scheduler
+  name: blane-scheduler
 spec:
   type: NodePort
   selector:
