@@ -42,7 +42,7 @@ spec:
             configMapKeyRef:
               key: RDS_USERNAME
               name: blane-config
-        image: kamalessafi/blane-scheduler-kubernetes:0.0.24-SNAPSHOT
+        image: kamalessafi/blane-scheduler-kubernetes:0.0.25-SNAPSHOT
         name: blane-scheduler
         resources: #CHANGE
           requests:
