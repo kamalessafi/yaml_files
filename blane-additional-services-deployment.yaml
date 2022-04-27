@@ -41,6 +41,16 @@ spec:
             configMapKeyRef:
               key: RDS_USERNAME
               name: blane-config
+        - name: RDS_RADIUS_DISTANCE
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_RADIUS_DISTANCE
+              name: blane-config
+        - name: RDS_BLANE_REPORTS_COUNT
+          valueFrom:
+            configMapKeyRef:
+              key: RDS_BLANE_REPORTS_COUNT
+              name: blane-config
         image: kamalessafi/blane-additional-services-kubernetes:0.0.29-SNAPSHOT
         name: blane-additional-services
         ports:
