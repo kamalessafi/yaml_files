@@ -38,3 +38,11 @@ spec:
         backend:
           serviceName: blane-additional-services
           servicePort: 8200
+      - path: /blane-apple/*
+        backend:
+          serviceName: blane-apple
+          servicePort: 8000 
+      - path: /blane-apple-additional-services/*
+        backend:
+          serviceName: blane-apple-additional-services
+          servicePort: 8200
