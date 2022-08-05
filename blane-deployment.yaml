@@ -52,7 +52,7 @@ spec:
             configMapKeyRef:
               key: RDS_BLANE_REPORTS_COUNT
               name: blane-config
-        image: kamalessafi/blane-kubernetes:0.0.31-SNAPSHOT
+        image: kamalessafi/blane-kubernetes:0.0.33-SNAPSHOT
         name: blane
         ports:
         - name: liveness-port
